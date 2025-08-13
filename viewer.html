@@ -69,8 +69,8 @@
     ar
     ar-modes="webxr scene-viewer quick-look"
     camera-controls
-    camera-orbit="0deg 75deg 0.5m"
-    field-of-view="60deg"
+    camera-orbit="0deg 75deg 0.75m"
+    field-of-view="45deg"
     environment-image="neutral"
     exposure="1"
     shadow-intensity="1"
@@ -83,8 +83,8 @@
     interaction-prompt="none"
     touch-action="none"
     bounds="tight"
-    min-camera-orbit="auto auto 0.1m"
-    max-camera-orbit="auto auto 2m">
+    min-camera-orbit="auto auto 0.1m"  <!-- Changed from 0.5m to 0.1m -->
+    max-camera-orbit="auto auto 1.5m">
     
     <button slot="ar-button" class="ar-button">
       View in AR
@@ -96,8 +96,7 @@
     
     <div class="instructions" id="instructions">
       Move your phone slowly to detect surfaces<br>
-      Tap on the floor to place the seat<br>
-      Pinch to zoom in/out for close inspection
+      Tap on the floor to place the seat
     </div>
     
   </model-viewer>
@@ -125,8 +124,8 @@
     
     // Reset camera when entering AR
     modelViewer.addEventListener('enter-ar', () => {
-      modelViewer.cameraOrbit = '0deg 75deg 0.5m';
-      modelViewer.fieldOfView = '60deg';
+      modelViewer.cameraOrbit = '0deg 75deg 0.75m';
+      modelViewer.fieldOfView = '45deg';
     });
   </script>
 
