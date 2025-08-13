@@ -86,8 +86,8 @@
     camera-orbit="0deg 75deg 1.5m"
     field-of-view="30deg"
     environment-image="neutral"
-    exposure="1"
-    shadow-intensity="1"
+    exposure="1.2"
+    shadow-intensity="1.2"
     shadow-softness="0.8"
     alt="Simforge Apex Seat 3D model"
     ar-scale="fixed"
@@ -98,7 +98,8 @@
     touch-action="none"
     bounds="tight"
     min-camera-orbit="auto auto 0.1m"
-    max-camera-orbit="auto auto 3m">
+    max-camera-orbit="auto auto 3m"
+    scale="1.5 1.5 1.5"> <!-- Increased scale factor -->
     
     <button slot="ar-button" class="ar-button">
       View in AR
@@ -149,6 +150,7 @@
     modelViewer.addEventListener('enter-ar', () => {
       modelViewer.cameraOrbit = '0deg 75deg 1.5m';
       modelViewer.fieldOfView = '30deg';
+      modelViewer.scale = '1.5 1.5 1.5'; // Ensure scale is applied in AR
     });
   </script>
 
