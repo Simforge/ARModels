@@ -74,12 +74,13 @@
     shadow-intensity="1"
     shadow-softness="0.8"
     alt="Simforge Apex Seat 3D model"
-    ar-scale="fixed"
+    ar-scale="auto"
     xr-environment
     ar-placement="floor"
     ar-tracking="fixed-to-plane"
     interaction-prompt="none"
-    touch-action="none">
+    touch-action="none"
+    scale="1 1 1">
     
     <button slot="ar-button" class="ar-button">
       View in AR
@@ -119,13 +120,7 @@
     
     // Ensure model stays stable
     modelViewer.addEventListener('click', (event) => {
-      // This helps stabilize the model after placement
       modelViewer.arTracking = 'fixed-to-plane';
-    });
-    
-    // Reset scale to ensure proper size
-    modelViewer.addEventListener('load', () => {
-      modelViewer.scale = "1 1 1";
     });
   </script>
 
