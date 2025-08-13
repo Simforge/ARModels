@@ -11,6 +11,7 @@
       height: 100%;
       background: #fff;
       font-family: Arial, sans-serif;
+      overflow: hidden;
     }
     model-viewer {
       width: 100%;
@@ -18,7 +19,7 @@
     }
     .ar-prompt {
       position: absolute;
-      bottom: 20px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(0,0,0,0.7);
@@ -27,6 +28,8 @@
       border-radius: 30px;
       font-size: 16px;
       display: none;
+      text-align: center;
+      max-width: 80%;
     }
     .ar-button {
       position: absolute;
@@ -40,6 +43,21 @@
       border-radius: 30px;
       font-size: 16px;
       cursor: pointer;
+      z-index: 1;
+    }
+    .instructions {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      text-align: center;
+      max-width: 80%;
+      display: none;
     }
   </style>
 </head>
@@ -49,10 +67,8 @@
     src="https://raw.githubusercontent.com/Simforge/ARModels/main/racing_seat.glb"
     ios-src="https://raw.githubusercontent.com/Simforge/ARModels/main/simracing_seat.usdz"
     ar
-    ar-modes="scene-viewer quick-look webxr"
+    ar-modes="webxr scene-viewer quick-look"
     camera-controls
-    auto-rotate
-    camera-orbit="45deg 55deg 2.5m"
     environment-image="neutral"
     exposure="1"
     shadow-intensity="1"
@@ -60,7 +76,10 @@
     alt="Simforge Apex Seat 3D model"
     ar-scale="fixed"
     xr-environment
-    ar-placement="floor">
+    ar-placement="floor"
+    ar-tracking="fixed-to-plane"
+    interaction-prompt="none"
+    touch-action="none">
     
     <button slot="ar-button" class="ar-button">
       View in AR
@@ -70,10 +89,27 @@
       AR not available on this device
     </div>
     
+    <div class="instructions" id="instructions">
+      Move your phone slowly to detect surfaces<br>
+      Tap on the floor to place the seat
+    </div>
+    
   </model-viewer>
 
   <script>
-    document.querySelector('model-viewer').addEventListener('ar-status', (event) => {
+    const modelViewer = document.querySelector('model-viewer');
+    
+    // Show instructions when AR starts
+    modelViewer.addEventListener('ar-tracking', (event) => {
+      const instructions = document.getElementById('instructions');
+      if (event.detail.status === 'tracking') {
+        instructions.style.display = 'block';
+        setTimeout(() => { instructions.style.display = 'none'; }, 5000);
+      }
+    });
+    
+    // Handle AR status messages
+    modelViewer.addEventListener('ar-status', (event) => {
       const prompt = document.getElementById('ar-prompt');
       if (event.detail.status === 'failed') {
         prompt.style.display = 'block';
@@ -81,10 +117,15 @@
       }
     });
     
-    // Ensure the model is scaled to real-world size
-    document.querySelector('model-viewer').addEventListener('load', () => {
-      const modelViewer = document.querySelector('model-viewer');
-      modelViewer.scale = "1 1 1"; // Reset to 1:1 scale
+    // Ensure model stays stable
+    modelViewer.addEventListener('click', (event) => {
+      // This helps stabilize the model after placement
+      modelViewer.arTracking = 'fixed-to-plane';
+    });
+    
+    // Reset scale to ensure proper size
+    modelViewer.addEventListener('load', () => {
+      modelViewer.scale = "1 1 1";
     });
   </script>
 
