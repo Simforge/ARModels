@@ -69,21 +69,21 @@
     ar
     ar-modes="webxr scene-viewer quick-look"
     camera-controls
-    camera-orbit="0deg 75deg 1.5m"
-    field-of-view="30deg"
+    camera-orbit="0deg 75deg 0.5m"
+    field-of-view="60deg"
     environment-image="neutral"
     exposure="1"
     shadow-intensity="1"
     shadow-softness="0.8"
     alt="Simforge Apex Seat 3D model"
-    ar-scale="auto"
+    ar-scale="fixed"
     xr-environment
     ar-placement="floor"
     ar-tracking="fixed-to-plane"
     interaction-prompt="none"
     touch-action="none"
     bounds="tight"
-    min-camera-orbit="auto auto 1m"
+    min-camera-orbit="auto auto 0.1m"
     max-camera-orbit="auto auto 2m">
     
     <button slot="ar-button" class="ar-button">
@@ -96,7 +96,8 @@
     
     <div class="instructions" id="instructions">
       Move your phone slowly to detect surfaces<br>
-      Tap on the floor to place the seat
+      Tap on the floor to place the seat<br>
+      Pinch to zoom in/out for close inspection
     </div>
     
   </model-viewer>
@@ -124,7 +125,8 @@
     
     // Reset camera when entering AR
     modelViewer.addEventListener('enter-ar', () => {
-      modelViewer.cameraOrbit = '0deg 75deg 1.5m';
+      modelViewer.cameraOrbit = '0deg 75deg 0.5m';
+      modelViewer.fieldOfView = '60deg';
     });
   </script>
 
